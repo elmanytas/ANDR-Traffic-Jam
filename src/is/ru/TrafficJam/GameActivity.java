@@ -2,7 +2,11 @@ package is.ru.TrafficJam;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,6 +17,8 @@ import android.os.Bundle;
  */
 public class GameActivity extends Activity
 {
+    GameView m_gv;
+    ArrayList<Block> m_board;
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -24,7 +30,23 @@ public class GameActivity extends Activity
 
 
 
-
         setContentView(R.layout.game);
+        m_gv = (GameView) findViewById( R.id.gameview );
+        m_board = new ArrayList<Block>();
+        m_board.add(new Block(2,false,new Point(1,2)));
+        m_board.add(new Block(3,true,new Point(0,1)));
+        m_board.add(new Block(2,false,new Point(0,0)));
+        m_board.add(new Block(3,true,new Point(3,1)));
+        m_board.add(new Block(3,false,new Point(2,5)));
+        m_board.add(new Block(2,true,new Point(0,4)));
+        m_board.add(new Block(2,false,new Point(4,4)));
+        m_board.add(new Block(3,true,new Point(5,0)));
+
+
+        updateDisplay();
+    }
+    public void updateDisplay()
+    {
+        m_gv.setBoard(m_board);
     }
 }
