@@ -30,7 +30,7 @@ public class LevelSelectActivity extends Activity
         Button buttonView = (Button) view;
         String message = buttonView.getText().toString();
 
-        Intent intent = new Intent( this, LevelSelectActivity.class );
+        Intent intent = new Intent( this, GameActivity.class );
 
         intent.putExtra(LEVEL_NUMBER, message);
 /*

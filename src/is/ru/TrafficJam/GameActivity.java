@@ -19,7 +19,7 @@ public class GameActivity extends Activity
 
         // Get the message from the intent
         Intent intent = getIntent();
-        String message = intent.getStringExtra(LevelSelectActivity.LEVEL_NUMBER);
+        String levelNumber = intent.getStringExtra(LevelSelectActivity.LEVEL_NUMBER);
 
 
 
