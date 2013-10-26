@@ -7,7 +7,17 @@
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Hello World, MainActivity"
+            android:text="Traffic jam"
+            android:gravity="center"
+
+            />
+
+    <Button
+            android:id="@+id/playButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:onClick="playButtonPressed"
+            android:text="Play"
             />
 </LinearLayout>
 
