@@ -3,7 +3,11 @@ package is.ru.TrafficJam;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainActivity extends Activity
 {
@@ -15,6 +19,16 @@ public class MainActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        try
+        {
+            XMLParser.setIOStream(getApplicationContext().getAssets().open("challenge_classic40.xml"));
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
     // Start a activity that shows the level selection screen
