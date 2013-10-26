@@ -52,5 +52,13 @@ public class Block
     }
 
 
+    @Override
+    public String toString(){
+        String tempString = new String();
+        tempString+= "(";
+        String v = (isVertical)?"V ":"H ";
 
+        tempString+=v+pos.x + " " + pos.y + " " + length + ")";
+        return tempString;
+    }
 }
