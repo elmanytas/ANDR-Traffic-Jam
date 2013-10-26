@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+        >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Select a level:"
+                android:gravity="center"
+
+                />
+
+
+        <TableLayout
+                android:id="@+id/grid"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:stretchColumns="*"
+                >
+            <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    >
+                <Button
+                        android:id="@+id/level1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="buttonPressHandler"
+                        android:text="1"
+                        />
+                <Button
+                        android:id="@+id/level2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="buttonPressHandler"
+                        android:text="2"
+                        />
+                <Button
+                        android:id="@+id/leve3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="buttonPressHandler"
+                        android:text="3"
+                        />
+            </TableRow>
+            <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+
+                    >
+                <Button
+                        android:id="@+id/level4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="buttonPressHandler"
+                        android:text="4"
+                        />
+                <Button
+                        android:id="@+id/level5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="buttonPressHandler"
+                        android:text="5"
+                        />
+                <Button
+                        android:id="@+id/level6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="buttonPressHandler"
+                        android:text="6"
+                        />
+            </TableRow>
+        </TableLayout>
+
+
+    </LinearLayout>
+</ScrollView>
