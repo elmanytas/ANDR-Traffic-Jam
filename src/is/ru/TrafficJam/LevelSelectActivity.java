@@ -51,7 +51,8 @@ public class LevelSelectActivity extends Activity
             }
         };
 
-        for (int i = 1; i<41; i++){
+
+        for (int i = 1; i<=XMLParser.getNumberOfLevels(); i++){
             Button button = new Button(this);
             button.setText(Integer.toString(i));
             button.setOnClickListener(listener);

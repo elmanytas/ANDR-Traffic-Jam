@@ -20,8 +20,7 @@ public class GameLogic
         return blockArray;
     }
     GameLogic(int level){
-        blockArray = new ArrayList<Block>();
-        //TODO: get the level from XMLParser
+        blockArray = XMLParser.getLevel(level);
     }
 
     public boolean isGameOver(){
