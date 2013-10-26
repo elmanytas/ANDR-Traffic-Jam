@@ -1,6 +1,7 @@
 package is.ru.TrafficJam;
 
 import android.graphics.Point;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -36,7 +37,10 @@ public class GameLogic
             block.setPos(posToMoveTo);
         }
         else{
-            //Snorri pls
+            Log.d("Gamelogic: ", "Block not found at point: " + blockToMove.toString());
+        }
+        if (isGameOver()){
+            //Get the next level
         }
     }
     private Block getBlockByPos(Point pos){
