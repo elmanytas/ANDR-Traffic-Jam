@@ -24,7 +24,8 @@ public class LevelSelectActivity extends Activity
     }
 
     // Handles all the button presses
-    public void buttonPressHandler(View view) {
+    public void buttonPressHandler(View view)
+    {
 
         Button buttonView = (Button) view;
         String message = buttonView.getText().toString();

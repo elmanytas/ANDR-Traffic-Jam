@@ -11,8 +11,10 @@ import android.os.Bundle;
  * Time: 14:32
  * To change this template use File | Settings | File Templates.
  */
-public class GameActivity extends Activity {
-    public void onCreate(Bundle savedInstanceState) {
+public class GameActivity extends Activity
+{
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         // Get the message from the intent
@@ -22,7 +24,7 @@ public class GameActivity extends Activity {
 
 
 
-        
+
         setContentView(R.layout.game);
     }
 }
