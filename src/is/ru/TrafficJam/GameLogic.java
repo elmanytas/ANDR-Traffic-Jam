@@ -35,6 +35,9 @@ public class GameLogic
         if (block != null){
             block.setPos(posToMoveTo);
         }
+        else{
+            //Snorri pls
+        }
     }
     private Block getBlockByPos(Point pos){
         for (Block b : blockArray){
