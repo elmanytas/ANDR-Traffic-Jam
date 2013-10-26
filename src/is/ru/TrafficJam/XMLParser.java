@@ -45,6 +45,15 @@ public class XMLParser
         return blocks.get(lvlNr-1);
     }
 
+    public static int getNumberOfLevels()
+    {
+        if(blocks == null)
+        {
+            readXML();
+        }
+        return blocks.size();
+    }
+
     public static void setIOStream(InputStream io)
     {
         xmlInputStream = io;

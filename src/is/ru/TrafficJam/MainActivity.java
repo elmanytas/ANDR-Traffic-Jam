@@ -37,4 +37,11 @@ public class MainActivity extends Activity
         Intent intent = new Intent( this, LevelSelectActivity.class );
         startActivity( intent );
     }
+
+    // Start a activity that shows the options screen
+    public void optionsButtonPressed( View view )
+    {
+        Intent intent = new Intent( this, OptionsActivity.class );
+        startActivity( intent );
+    }
 }
