@@ -4,10 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import is.ru.TrafficJam.DataBase.TrafficJamSQLiteAdapter;
+
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,10 +25,20 @@ public class LevelSelectActivity extends Activity
 {
     public final static String LEVEL_NUMBER = "is.ru.TrafficJam.LEVEL_NUMBER";
 
+    private TrafficJamSQLiteAdapter trafficJamAdapter = new TrafficJamSQLiteAdapter( this );
+    private Map<String, Boolean> finishedLevels;
+
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.levelselect);
+
+
+
+        trafficJamAdapter.markLevelAsFinished(3);
+        finishedLevels = trafficJamAdapter.getFinishedLevelsMap();
+        Log.d("TrafficJamDB", "Value of level 3: " + finishedLevels.containsKey("3"));
+
 
         ScrollView scrollView = new ScrollView(this);
         scrollView.setLayoutParams(new ScrollView.LayoutParams(ScrollView.LayoutParams.MATCH_PARENT,ScrollView.LayoutParams.MATCH_PARENT));
@@ -54,7 +69,14 @@ public class LevelSelectActivity extends Activity
 
         for (int i = 1; i<=XMLParser.getNumberOfLevels(); i++){
             Button button = new Button(this);
-            button.setText(Integer.toString(i));
+            if (finishedLevels.containsKey(((Integer)i).toString()))
+            {
+                button.setText("★ " + Integer.toString(i) + " ★");
+            }
+            else
+            {
+                button.setText(Integer.toString(i));
+            }
             button.setOnClickListener(listener);
             tableRow.addView(button);
             counter++;
@@ -97,7 +119,7 @@ public class LevelSelectActivity extends Activity
             case R.id.button9:
         }
 */
-        startActivity( intent );
+        startActivity(intent);
     }
 
 
