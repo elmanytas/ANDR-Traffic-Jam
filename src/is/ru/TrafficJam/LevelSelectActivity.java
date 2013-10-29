@@ -35,7 +35,7 @@ public class LevelSelectActivity extends Activity
 
 
 
-        trafficJamAdapter.markLevelAsFinished(3);
+
         finishedLevels = trafficJamAdapter.getFinishedLevelsMap();
         Log.d("TrafficJamDB", "Value of level 3: " + finishedLevels.containsKey("3"));
 
@@ -101,10 +101,16 @@ public class LevelSelectActivity extends Activity
 
         Button buttonView = (Button) view;
         String message = buttonView.getText().toString();
+        String newMessage = "";
+        for(char c : message.toCharArray())
+        {
+            if(Character.isDigit(c))
+                newMessage+=c;
+        }
 
         Intent intent = new Intent( this, GameActivity.class );
 
-        intent.putExtra(LEVEL_NUMBER, message);
+        intent.putExtra(LEVEL_NUMBER, newMessage);
 /*
         switch ( view.getId() )
         {

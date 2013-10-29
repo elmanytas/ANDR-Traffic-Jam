@@ -29,24 +29,8 @@ public class GameActivity extends Activity
 
 
 
-
         setContentView(R.layout.game);
         m_gv = (GameView) findViewById( R.id.gameview );
-        m_board = new ArrayList<Block>();
-        m_board.add(new Block(2,false,new Point(1,2)));
-        m_board.add(new Block(3,true,new Point(0,1)));
-        m_board.add(new Block(2,false,new Point(0,0)));
-        m_board.add(new Block(3,true,new Point(3,1)));
-        m_board.add(new Block(3,false,new Point(2,5)));
-        m_board.add(new Block(2,true,new Point(0,4)));
-        m_board.add(new Block(2,false,new Point(4,4)));
-        m_board.add(new Block(3,true,new Point(5,0)));
-
-
-        updateDisplay();
-    }
-    public void updateDisplay()
-    {
-        m_gv.setBoard(m_board);
+        m_gv.setBoard(Integer.parseInt(levelNumber));
     }
 }

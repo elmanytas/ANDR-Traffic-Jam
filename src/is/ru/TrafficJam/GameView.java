@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -36,13 +37,38 @@ public class GameView extends View
     public int m_cellHeight = 80;
     private Point m_oldPos;
     private Point m_fingerDown;
+    private int m_id;
+    private int m_movementMin;
+    private int m_movementMax;
+    private Bitmap lee;
+    private Bitmap carter;
+    private Bitmap rotatedcarter;
     Paint mPaint = new Paint();
     ArrayList<MyShape> mShapes = new ArrayList<MyShape>();
     MyShape mMovingShape = null;
     Rect m_rect = new Rect();
+    private GameLogic m_logic;
+
     public GameView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+        BitmapFactory baby = new BitmapFactory();
+        try {
+            lee = BitmapFactory.decodeStream(context.getAssets().open("lee.png"));
+            carter = BitmapFactory.decodeStream(context.getAssets().open("carter.png"));
+
+            Matrix matrix = new Matrix();
+            matrix.postRotate(-90);
+            rotatedcarter = Bitmap.createBitmap(carter, 0, 0,
+                    carter.getWidth(), carter.getHeight(),
+                    matrix, true);
+
+            lee = Bitmap.createBitmap(lee, 0, 0,
+                    lee.getWidth(), lee.getHeight(),
+                    matrix, true);
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
     protected void onDraw( Canvas canvas )
@@ -60,18 +86,32 @@ public class GameView extends View
         mPaint.setStyle( Paint.Style.FILL );
         for ( MyShape shape : mShapes ) {
             mPaint.setColor( shape.color );
-            canvas.drawRect( shape.rect, mPaint );
+            if(shape.color == Color.CYAN)
+                canvas.drawBitmap(lee,null,shape.rect,mPaint);
+            else{
+                if(shape.block.isVertical())
+                    canvas.drawBitmap(carter,null,shape.rect,mPaint);
+                else
+                    canvas.drawBitmap(rotatedcarter,null,shape.rect,mPaint);
+            }
+            //canvas.drawRect( shape.rect.left+2,shape.rect.top+2,shape.rect.right-2,shape.rect.bottom-2, mPaint );
         }
     }
     public void lol()
     {
         Log.d("GameViewLOL", "Lol()");
     }
-    public void setBoard( ArrayList<Block> board )
+    public void setBoard( int level )
     {
-        Log.d("GameViewLOL", "Starting to parse");
+        m_logic = new GameLogic(level,getContext());
+    }
+    private void makeShapes( )
+    {
+        /*Log.d("GameViewLOL", "Starting to parse");
         Log.d("GameViewLOL", board.get(0).getPos().toString());
-        Log.d("GameViewLOL", "m_cellWidth:"+m_cellWidth );
+        Log.d("GameViewLOL", "m_cellWidth:"+m_cellWidth );*/
+        mShapes = new ArrayList<MyShape>();
+        ArrayList<Block> board = m_logic.getBlockArray();
         boolean isFirst = true;
         for ( Block b : board)
         {
@@ -112,6 +152,7 @@ public class GameView extends View
         m_cellWidth = xNew / 6;
         Log.d("GameViewLOL", "m_cellWidth:"+m_cellWidth );
         m_cellHeight = yNew / 6;
+        makeShapes();
     }
     public boolean onTouchEvent( MotionEvent event ) {
 
@@ -125,6 +166,11 @@ public class GameView extends View
             if(mMovingShape != null){
                 m_oldPos = new Point( mMovingShape.rect.left,mMovingShape.rect.top);
                 m_fingerDown = new Point(m_oldPos.x-x,m_oldPos.y-y);
+                m_movementMin = m_logic.getMin(mMovingShape.block)*m_cellHeight;
+                m_movementMax = m_logic.getMax(mMovingShape.block)*m_cellHeight;
+                Log.d("GameViewLOL", "m_movementMin:" + m_movementMin);
+                Log.d("GameViewLOL", "m_movementMax:" + m_movementMax);
+
             }
             break;
         case MotionEvent.ACTION_UP:
@@ -134,7 +180,12 @@ public class GameView extends View
                 int newRight = newLeft+mMovingShape.rect.width();
                 int newBot = newTop+mMovingShape.rect.height();
                 mMovingShape.rect.set(newLeft,newTop,newRight,newBot);
-                //TODO: senda makeMove með oldpos og newpos.
+
+                m_logic.moveBlock(screenToWorld(m_oldPos),screenToWorld(new Point(mMovingShape.rect.left,mMovingShape.rect.top)));
+                if(m_logic.isGameOver()){
+                    m_logic.loadNextLevel();
+                    makeShapes();
+                }
                 invalidate();
                 mMovingShape = null;
                 // emit an custom event ....
@@ -151,24 +202,35 @@ public class GameView extends View
                     y = 0;
                 x = Math.min( x, getWidth() - mMovingShape.rect.width() );
                 y = Math.min( y, getHeight() - mMovingShape.rect.height() );
-
-                if(mMovingShape.block.isVertical()){
-                    MyShape lol = collision(mMovingShape);
-                    if(lol == null){
+                if(mMovingShape.block.isVertical())
+                {
+                    /*if(y>m_movementMin && y < m_movementMax)
+                    {
                         mMovingShape.rect.offsetTo( m_oldPos.x, y );
-                    } else{
-                        //mMovingShape.rect.offsetTo( m_oldPos.x,oldPos.y-1);
+                    }*/
+                    mMovingShape.rect.offsetTo( m_oldPos.x, Math.min(m_movementMax,Math.max(m_movementMin,y)) );
+                }
+                else {
+                    /*if(x>m_movementMin && x < m_movementMax)
+                    {
+                        mMovingShape.rect.offsetTo( x, m_oldPos.y );
+                    }*/
+                    mMovingShape.rect.offsetTo( Math.min(m_movementMax,Math.max(m_movementMin,x)), m_oldPos.y );
+                }
+/*
+                if(mMovingShape.block.isVertical()){
+                    if(m_logic.isEmpty(xToCol(m_oldPos.x), yToRow(y) +mMovingShape.block.getLength(),m_id) &&m_logic.isEmpty(xToCol(m_oldPos.x), yToRow(y),m_id))
+                    {
+                        mMovingShape.rect.offsetTo( m_oldPos.x, y );
                     }
                 }
                 else
                 {
-                    MyShape lol = collision(mMovingShape);
-                    if(lol == null){
+                    if(m_logic.isEmpty(xToCol(x),yToRow(m_oldPos.y),m_id) && m_logic.isEmpty(xToCol(x)+mMovingShape.block.getLength(),yToRow(m_oldPos.y),m_id))
+                    {
                         mMovingShape.rect.offsetTo( x, m_oldPos.y );
-                    } else {
-                        //mMovingShape.rect.offsetTo( oldPos.x-1,m_oldPos.y);
                     }
-                }
+                }*/
                 invalidate();
             }
             break;
@@ -213,6 +275,11 @@ public class GameView extends View
         } else {
             return (int)yy;
         }
+    }
+
+    private Point screenToWorld(Point screen)
+    {
+        return new Point(xToCol(screen.x),yToRow(screen.y));
     }
 
 
