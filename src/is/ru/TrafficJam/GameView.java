@@ -3,6 +3,7 @@ package is.ru.TrafficJam;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.*;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -43,6 +44,8 @@ public class GameView extends View
     private Bitmap lee;
     private Bitmap carter;
     private Bitmap rotatedcarter;
+    private MediaPlayer leeSound;
+    private MediaPlayer carterSound;
     Paint mPaint = new Paint();
     ArrayList<MyShape> mShapes = new ArrayList<MyShape>();
     MyShape mMovingShape = null;
@@ -52,23 +55,20 @@ public class GameView extends View
     public GameView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        BitmapFactory baby = new BitmapFactory();
-        try {
-            lee = BitmapFactory.decodeStream(context.getAssets().open("lee.png"));
-            carter = BitmapFactory.decodeStream(context.getAssets().open("carter.png"));
+        leeSound = MediaPlayer.create(context, R.raw.carter);
+        carterSound = MediaPlayer.create(context, R.raw.lee);
+        lee = BitmapFactory.decodeResource(context.getResources(),R.drawable.lee);
+        carter = BitmapFactory.decodeResource(context.getResources(),R.drawable.carter);
 
-            Matrix matrix = new Matrix();
-            matrix.postRotate(-90);
-            rotatedcarter = Bitmap.createBitmap(carter, 0, 0,
-                    carter.getWidth(), carter.getHeight(),
-                    matrix, true);
+        Matrix matrix = new Matrix();
+        matrix.postRotate(-90);
+        rotatedcarter = Bitmap.createBitmap(carter, 0, 0,
+                carter.getWidth(), carter.getHeight(),
+                matrix, true);
 
-            lee = Bitmap.createBitmap(lee, 0, 0,
-                    lee.getWidth(), lee.getHeight(),
-                    matrix, true);
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+        lee = Bitmap.createBitmap(lee, 0, 0,
+                lee.getWidth(), lee.getHeight(),
+                matrix, true);
     }
 
 
@@ -98,14 +98,12 @@ public class GameView extends View
             //canvas.drawRect( shape.rect.left+2,shape.rect.top+2,shape.rect.right-2,shape.rect.bottom-2, mPaint );
         }
     }
-    public void lol()
+
+    public void setLogic( GameLogic logic )
     {
-        Log.d("GameViewLOL", "Lol()");
+        m_logic = logic;
     }
-    public void setBoard( int level )
-    {
-        m_logic = new GameLogic(level,getContext());
-    }
+
     private void makeShapes( )
     {
         /*Log.d("GameViewLOL", "Starting to parse");
@@ -183,13 +181,33 @@ public class GameView extends View
                 mMovingShape.rect.set(newLeft,newTop,newRight,newBot);
 
                 m_logic.moveBlock(screenToWorld(m_oldPos),screenToWorld(new Point(mMovingShape.rect.left,mMovingShape.rect.top)));
+
                 if(m_logic.isGameOver()){
                     m_logic.loadNextLevel();
                     makeShapes();
                 }
                 invalidate();
                 mMovingShape = null;
-                // emit an custom event ....
+
+                //Sound
+
+                if(mMovingShape.color == Color.CYAN)
+                {
+                    if(leeSound.isPlaying()){
+                        leeSound.seekTo(0);
+                    } else {
+                        leeSound.start();
+                    }
+                }
+                else
+                {
+                    if(carterSound.isPlaying())
+                    {
+                        carterSound .seekTo(0);
+                    } else {
+                        carterSound.start();
+                    }
+                }
             }
             break;
         case MotionEvent.ACTION_MOVE:
@@ -218,20 +236,7 @@ public class GameView extends View
                     }*/
                     mMovingShape.rect.offsetTo( Math.min(m_movementMax,Math.max(m_movementMin,x)), m_oldPos.y );
                 }
-/*
-                if(mMovingShape.block.isVertical()){
-                    if(m_logic.isEmpty(xToCol(m_oldPos.x), yToRow(y) +mMovingShape.block.getLength(),m_id) &&m_logic.isEmpty(xToCol(m_oldPos.x), yToRow(y),m_id))
-                    {
-                        mMovingShape.rect.offsetTo( m_oldPos.x, y );
-                    }
-                }
-                else
-                {
-                    if(m_logic.isEmpty(xToCol(x),yToRow(m_oldPos.y),m_id) && m_logic.isEmpty(xToCol(x)+mMovingShape.block.getLength(),yToRow(m_oldPos.y),m_id))
-                    {
-                        mMovingShape.rect.offsetTo( x, m_oldPos.y );
-                    }
-                }*/
+
                 invalidate();
             }
             break;

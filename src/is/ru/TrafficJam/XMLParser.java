@@ -117,7 +117,7 @@ public class XMLParser
 
     }
 
-    private static Block stringsToBlocks(String s)
+    public static Block stringsToBlocks(String s)
     {
         s = s.replace("(","");
         s = s.replace(")","");

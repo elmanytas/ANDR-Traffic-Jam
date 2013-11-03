@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class GameActivity extends Activity
 {
     GameView m_gv;
-    ArrayList<Block> m_board;
+    GameLogic m_logic;
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -31,6 +31,17 @@ public class GameActivity extends Activity
 
         setContentView(R.layout.game);
         m_gv = (GameView) findViewById( R.id.gameview );
-        m_gv.setBoard(Integer.parseInt(levelNumber));
+        m_logic = new GameLogic(Integer.parseInt(levelNumber),getApplicationContext());
+        m_gv.setLogic(m_logic);
+        if ( savedInstanceState != null ) {
+            String state = savedInstanceState.getString( "boardState" );
+            m_logic.setState( state );
+        }
+        //Log.d("GameViewLOL",m_gv.getState());
+    }
+    @Override
+    public void onSaveInstanceState( Bundle savedInstanceState ) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString( "boardState", m_logic.toString() );
     }
 }

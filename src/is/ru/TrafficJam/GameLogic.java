@@ -155,4 +155,22 @@ public class GameLogic
         }
         return null;
     }
+    public String toString()
+    {
+        String board = "";
+        for (Block b : blockArray){
+            board += b.toString() +", ";
+        }
+        return board.substring(0,board.length()-2);
+    }
+    public void setState(String state)
+    {
+        blockArray = new ArrayList<Block>();
+        String[] blockStringSplit = state.split(", ");
+
+        for (int j = 0; j < blockStringSplit.length; j++)
+        {
+            blockArray.add(XMLParser.stringsToBlocks(blockStringSplit[j]));
+        }
+    }
 }
