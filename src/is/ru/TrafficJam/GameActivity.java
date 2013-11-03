@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 /**
  * Created with IntelliJ IDEA.
@@ -43,5 +44,21 @@ public class GameActivity extends Activity
     public void onSaveInstanceState( Bundle savedInstanceState ) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putString( "boardState", m_logic.toString() );
+    }
+
+    public void prevButtonPressed( View view)
+    {
+        m_logic.loadPrevLevel();
+        m_gv.setLogic(m_logic);
+    }
+    public void resetButtonPressed( View view)
+    {
+        m_logic.reset();
+        m_gv.setLogic(m_logic);
+    }
+    public void nextButtonPressed( View view)
+    {
+        m_logic.loadNextLevel();
+        m_gv.setLogic(m_logic);
     }
 }

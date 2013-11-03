@@ -1,6 +1,7 @@
 package is.ru.TrafficJam;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.util.Log;
 import is.ru.TrafficJam.DataBase.TrafficJamSQLiteAdapter;
@@ -28,17 +29,36 @@ public class GameLogic
     GameLogic(int level,Context context){
         m_context = context;
         m_level = level;
-        trafficJamAdapter = new TrafficJamSQLiteAdapter(m_context );
+        trafficJamAdapter = new TrafficJamSQLiteAdapter(m_context);
         loadLevel();
     }
     private void loadLevel()
     {
+        SharedPreferences.Editor editor = MainActivity.settings.edit();
+        editor.putInt(m_context.getString(R.string.last_level_variable_name),m_level);
+        editor.commit();
+
         blockArray = XMLParser.getLevel(m_level);
         updateBoardStatus();
     }
     public void loadNextLevel()
     {
-        m_level++;
+        if(m_level <= XMLParser.getNumberOfLevels())
+        {
+            m_level++;
+            loadLevel();
+        }
+    }
+    public void loadPrevLevel()
+    {
+        if(m_level > 1)
+        {
+            m_level--;
+            loadLevel();
+        }
+    }
+    public void reset()
+    {
         loadLevel();
     }
 

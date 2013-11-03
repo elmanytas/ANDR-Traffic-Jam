@@ -2,4 +2,5 @@
 <resources>
     <bool name="vibrate">true</bool>
     <bool name="sound">true</bool>
+    <integer name="level">1</integer>
 </resources>

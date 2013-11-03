@@ -3,14 +3,9 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
+              android:gravity="bottom"
+              android:background="@drawable/splash"
         >
-    <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Traffic jam"
-            android:gravity="center"
-
-            />
 
     <Button
             android:id="@+id/playButton"
@@ -19,7 +14,13 @@
             android:onClick="playButtonPressed"
             android:text="Play"
             />
-
+    <Button
+            android:id="@+id/levelsButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:onClick="levelsButtonPressed"
+            android:text="Level Select"
+            />
     <Button
             android:id="@+id/optionsButton"
             android:layout_width="fill_parent"

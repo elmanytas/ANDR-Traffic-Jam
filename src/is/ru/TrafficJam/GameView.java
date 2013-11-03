@@ -81,9 +81,9 @@ public class GameView extends View
             for (int c=0; c<6;++c){
                 m_rect.set( c * m_cellWidth, r * m_cellHeight,
                         c * m_cellWidth + m_cellWidth, r * m_cellHeight + m_cellHeight );
-                mPaint.setColor( Color.BLACK );
-                mPaint.setStyle( Paint.Style.FILL );
-                canvas.drawRect( m_rect, mPaint );
+                //mPaint.setColor( Color.BLACK );
+                //mPaint.setStyle( Paint.Style.FILL );
+                //canvas.drawRect( m_rect, mPaint );
                 //m_rect.inset( (int)(m_rect.width() * 0.1), (int)(m_rect.height() * 0.1) );
                 mPaint.setColor( Color.WHITE );
                 mPaint.setStyle( Paint.Style.STROKE );
@@ -106,6 +106,7 @@ public class GameView extends View
     public void setLogic( GameLogic logic )
     {
         m_logic = logic;
+        makeShapes();
     }
 
     private void makeShapes( )
@@ -213,8 +214,8 @@ public class GameView extends View
                 mMovingShape = null;
                 // emit an custom event ....
 
-                if(MainActivity.settings.getBoolean("vibrate",false))
-                    vibrator.vibrate(200);//TODO setja if hérna á settings
+                if(MainActivity.settings.getBoolean(getContext().getString(R.string.settings_vibrate_variable_name),getResources().getBoolean(R.bool.vibrate)))
+                    vibrator.vibrate(200);
             }
             break;
         case MotionEvent.ACTION_MOVE:

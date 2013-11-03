@@ -41,6 +41,15 @@ public class MainActivity extends Activity
     // Start a activity that shows the level selection screen
     public void playButtonPressed( View view )
     {
+        String newMessage = ""+MainActivity.settings.getInt(getString(R.string.last_level_variable_name),getResources().getInteger(R.integer.level));
+        Intent intent = new Intent( this, GameActivity.class );
+
+        intent.putExtra(LevelSelectActivity.LEVEL_NUMBER, newMessage);
+        startActivity( intent );
+    }
+
+    public void levelsButtonPressed( View view )
+    {
         Intent intent = new Intent( this, LevelSelectActivity.class );
         startActivity( intent );
     }
