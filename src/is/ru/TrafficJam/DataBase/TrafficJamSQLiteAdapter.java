@@ -89,5 +89,10 @@ public class TrafficJamSQLiteAdapter
         return temp;
     }
 
+    public void resetLevels()
+    {
+        dbHelper.resetLevels(db);
+    }
+
 
 }

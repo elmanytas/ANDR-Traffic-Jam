@@ -49,4 +49,16 @@ public class SQLiteDBHelper extends SQLiteOpenHelper
         sqLiteDatabase.execSQL( sqlDropTableFinishedLevels );
         onCreate( sqLiteDatabase );
     }
+
+    public void resetLevels(SQLiteDatabase sqLiteDatabase)
+    {
+        Log.d("TrafficJamDB", "Starting to drop and recreate table: " + TableFinishedLevels);
+        onUpgrade(sqLiteDatabase, 0, 0); // Gert til að komast framhjá code duplication
+        Log.d("TrafficJamDB", "Done droping and recreateing table: " + TableFinishedLevels);
+        /*
+        sqLiteDatabase.execSQL( sqlDropTableFinishedLevels );
+        onCreate( sqLiteDatabase );
+        */
+    }
+
 }
