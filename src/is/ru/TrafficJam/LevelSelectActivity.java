@@ -33,10 +33,7 @@ public class LevelSelectActivity extends Activity
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.levelselect);
 
-
-
-
-    setButtonsView();
+        setButtonsView();
     }
 
     private void setButtonsView(){

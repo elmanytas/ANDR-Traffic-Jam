@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import is.ru.TrafficJam.DataBase.TrafficJamSQLiteAdapter;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,12 +17,16 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
  * Time: 18:58
  * To change this template use File | Settings | File Templates.
  */
-public class OptionsActivity extends Activity {
+public class OptionsActivity extends Activity
+{
 
     private Switch switchVibrate;
     private Switch switchSound;
 
-    public void onCreate(Bundle savedInstanceState) {
+    private TrafficJamSQLiteAdapter trafficJamAdapter = new TrafficJamSQLiteAdapter( this );
+
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.options);
 
@@ -54,14 +60,19 @@ public class OptionsActivity extends Activity {
             }
         });
 
-
-
-
-
-
     }
 
+    public void buttonPressHandler(View view)
+    {
+        //Button buttonView = (Button) view;
 
+        switch ( view.getId() )
+        {
+            case R.id.resetLevels:
+                trafficJamAdapter.resetLevels();
+                break;
+        }
+    }
 
 
 }
