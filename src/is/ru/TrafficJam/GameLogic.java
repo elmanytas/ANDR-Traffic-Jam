@@ -43,7 +43,7 @@ public class GameLogic
     }
     public void loadNextLevel()
     {
-        if(m_level <= XMLParser.getNumberOfLevels())
+        if(m_level < XMLParser.getNumberOfLevels())
         {
             m_level++;
             loadLevel();

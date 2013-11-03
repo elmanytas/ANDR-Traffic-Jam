@@ -3,23 +3,16 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
+              android:gravity="bottom"
+              android:background="@drawable/splash"
         >
-    <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="285dp"
-            android:layout_gravity="center"
-            android:src="@drawable/splash"/>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:orientation="vertical"
-                  android:layout_width="fill_parent"
-                  android:layout_height="fill_parent"
-                  android:gravity="bottom"
-            >
+
     <Button
             android:id="@+id/playButton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:onClick="playButtonPressed"
+            style="@style/ButtonTextStyleMinoTourDev"
             android:text="Play"
             />
     <Button
@@ -27,6 +20,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:onClick="levelsButtonPressed"
+            style="@style/ButtonTextStyleMinoTourDev"
             android:text="Level Select"
             />
     <Button
@@ -34,8 +28,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:onClick="optionsButtonPressed"
+            style="@style/ButtonTextStyleMinoTourDev"
             android:text="Options"
             />
-    </LinearLayout>
 </LinearLayout>
 
