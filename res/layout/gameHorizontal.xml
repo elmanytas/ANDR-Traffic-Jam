@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+<is.ru.TrafficJam.GameView
+        android:id="@+id/gameview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="bottom"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/rushhour">
+        <Button
+                android:id="@+id/prevLevel"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:onClick="prevButtonPressed"
+                android:text="Previous"
+                />
+        <Button
+                android:id="@+id/resetButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:onClick="resetButtonPressed"
+                android:text="Reset"
+                />
+        <Button
+                android:id="@+id/nextLevel"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:onClick="nextButtonPressed"
+                android:text="Next"
+                />
+    </LinearLayout>
+</LinearLayout>
