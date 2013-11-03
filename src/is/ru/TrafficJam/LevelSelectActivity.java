@@ -36,6 +36,10 @@ public class LevelSelectActivity extends Activity
 
 
 
+    setButtonsView();
+    }
+
+    private void setButtonsView(){
         finishedLevels = trafficJamAdapter.getFinishedLevelsMap();
         Log.d("TrafficJamDB", "Value of level 3: " + finishedLevels.containsKey("3"));
 
@@ -127,6 +131,13 @@ public class LevelSelectActivity extends Activity
 */
         startActivity(intent);
     }
+
+    @Override
+    protected void onRestart (){
+        super.onRestart();
+        setButtonsView();
+    }
+
 
 
 }

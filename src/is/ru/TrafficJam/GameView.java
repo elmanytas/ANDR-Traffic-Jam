@@ -71,6 +71,7 @@ public class GameView extends View
         }
     }
 
+
     protected void onDraw( Canvas canvas )
     {
         mPaint.setColor( Color.BLACK );
