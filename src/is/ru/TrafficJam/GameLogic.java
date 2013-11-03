@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.util.Log;
+import android.widget.Toast;
 import is.ru.TrafficJam.DataBase.TrafficJamSQLiteAdapter;
 
 import java.util.ArrayList;
@@ -35,8 +36,12 @@ public class GameLogic
     private void loadLevel()
     {
         SharedPreferences.Editor editor = MainActivity.settings.edit();
-        editor.putInt(m_context.getString(R.string.last_level_variable_name),m_level);
+        editor.putInt(m_context.getString(R.string.last_level_variable_name), m_level);
         editor.commit();
+
+        Toast t = Toast.makeText(m_context, "Level: "+m_level, Toast.LENGTH_SHORT);
+        t.setMargin(0.0f,0.2f);
+        t.show();
 
         blockArray = XMLParser.getLevel(m_level);
         updateBoardStatus();
