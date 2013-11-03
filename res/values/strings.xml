@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">Rush Hour</string>
     <string name="settings_file_name">RushHourSettings</string>
+    <string name="settings_vibrate_variable_name">vibrate</string>
+    <string name="settings_sound_variable_name">sound</string>
 </resources>

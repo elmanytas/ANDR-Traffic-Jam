@@ -17,43 +17,51 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
  */
 public class OptionsActivity extends Activity {
 
-private Switch switchVibrate;
+    private Switch switchVibrate;
+    private Switch switchSound;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.options);
 
-        switchVibrate = (Switch) findViewById(R.id.switchVibrate);
+        // Setup the vibrate switch:
+        switchVibrate = (Switch) findViewById(R.id.switchVibrate); // Get a view of the vibrate switch.
 
-        switchVibrate.setChecked(MainActivity.settings.getBoolean("vibrate",false));
+        switchVibrate.setChecked(MainActivity.settings.getBoolean(getString(R.string.settings_vibrate_variable_name),getResources().getBoolean(R.bool.vibrate)));// Load the state of the variable and set the swich to that state
 
-        switchVibrate.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        switchVibrate.setOnCheckedChangeListener(new OnCheckedChangeListener() // Bind a lissener to the swich to save the new variable.
+        {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
                 Editor editor = MainActivity.settings.edit();
-                editor.putBoolean(getString(R.string.settings_file_name), switchVibrate.isChecked());
+                editor.putBoolean(getString(R.string.settings_vibrate_variable_name), isChecked);
                 editor.commit();
             }
         });
 
-    }
+        // Setup the sound switch:
+        switchSound = (Switch) findViewById(R.id.switchSound); // Get a view of the sound switch.
 
+        switchSound.setChecked(MainActivity.settings.getBoolean(getString(R.string.settings_sound_variable_name),getResources().getBoolean(R.bool.sound)));// Load the state of the variable and set the swich to that state
 
-
-    public void onSwichClicked( View view )
-    {
-        //switchVibrate
-        Switch switchView = (Switch) view;
-        boolean switchState = switchView.isChecked();
-        switch ( view.getId() )
+        switchSound.setOnCheckedChangeListener(new OnCheckedChangeListener() // Bind a lissener to the swich to save the new variable.
         {
-            case R.id.switchVibrate:
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                Editor editor = MainActivity.settings.edit();
+                editor.putBoolean(getString(R.string.settings_sound_variable_name), isChecked);
+                editor.commit();
+            }
+        });
 
-                break;
 
-        }
+
 
 
 
     }
+
+
+
 
 }

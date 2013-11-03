@@ -26,6 +26,7 @@ public class MainActivity extends Activity
 
         settings = getSharedPreferences(getString(R.string.settings_file_name), 0);
 
+
         try
         {
             XMLParser.setIOStream(getApplicationContext().getAssets().open("challenge_classic40.xml"));
