@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.Toast;
 import is.ru.TrafficJam.DataBase.TrafficJamSQLiteAdapter;
 
 /**
@@ -65,6 +66,7 @@ public class OptionsActivity extends Activity
         {
             case R.id.resetLevels:
                 trafficJamAdapter.resetLevels();
+                Toast.makeText(getApplicationContext(), "Levels have been reset!", Toast.LENGTH_LONG).show();
                 break;
         }
     }
