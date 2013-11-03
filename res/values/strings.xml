@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Traffic Jam</string>
+    <string name="app_name">Rush Hour</string>
+    <string name="settings_file_name">RushHourSettings</string>
 </resources>

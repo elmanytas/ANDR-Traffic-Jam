@@ -2,6 +2,7 @@ package is.ru.TrafficJam;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity
 {
+
+    public static SharedPreferences settings = null;
+
     /**
      * Called when the activity is first created.
      */
@@ -19,6 +23,8 @@ public class MainActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        settings = getSharedPreferences(getString(R.string.settings_file_name), 0);
 
         try
         {
