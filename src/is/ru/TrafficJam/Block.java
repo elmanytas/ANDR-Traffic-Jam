@@ -50,15 +50,25 @@ public class Block
         this.isVertical = vertical;
         this.pos = pos;
     }
+    //Copy constructor.
+    public Block(Block b)
+    {
+        this.length = b.getLength();
+        this.isVertical = b.isVertical();
+        this.pos = new Point(b.getPos());
+    }
 
 
     @Override
     public String toString(){
-        String tempString = new String();
-        tempString+= "(";
+        String tempString = "(";
         String v = (isVertical)?"V ":"H ";
 
         tempString+=v+pos.x + " " + pos.y + " " + length + ")";
         return tempString;
     }
+    /*@Override
+    public Block clone(){
+        return new Block(getLength(), isVertical(), new Point(getPos()));
+    }*/
 }

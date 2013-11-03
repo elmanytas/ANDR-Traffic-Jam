@@ -61,12 +61,11 @@ public class TrafficJamSQLiteAdapter
     public Cursor getFinishedLevels()
     {
         openToRead();
-        Cursor cursor = db.query( SQLiteDBHelper.TableFinishedLevels,
+        return db.query( SQLiteDBHelper.TableFinishedLevels,
                 SQLiteDBHelper.TableFinishedLevelsCols, null, null, null, null, null );
-        return cursor;
     }
 
-    public HashMap getFinishedLevelsMap()
+    public HashMap<String, Boolean> getFinishedLevelsMap()
     {
         Log.d("TrafficJamDB", "Started running [public HashMap getFinishedLevelsMap()]");
         HashMap<String, Boolean> temp = new HashMap<String, Boolean>();

@@ -1,16 +1,13 @@
 package is.ru.TrafficJam;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.*;
 import android.media.MediaPlayer;
-import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -18,27 +15,26 @@ import java.util.ArrayList;
  * User: Snorri A.
  * Date: 26.10.2013
  * Time: 14:40
- * To change this template use File | Settings | File Templates.
+ * GameView er view sem sýnir borðið sem maður er að spila.
  */
 public class GameView extends View
 {
     private class MyShape {
 
-        MyShape( Rect r, int c, Block b ) {
+        MyShape( Rect r, String c, Block b ) {
             rect = r;
-            color = c;
+            type = c;
             block = b;
         }
         Rect rect;
         Block block;
-        int  color;
+        String  type;
     }
 
-    public int m_cellWidth = 80;
-    public int m_cellHeight = 80;
+    private int m_cellWidth = 80;
+    private int m_cellHeight = 80;
     private Point m_oldPos;
     private Point m_fingerDown;
-    private int m_id;
     private int m_movementMin;
     private int m_movementMax;
     private Bitmap lee;
@@ -46,10 +42,10 @@ public class GameView extends View
     private Bitmap rotatedcarter;
     private MediaPlayer leeSound;
     private MediaPlayer carterSound;
-    Paint mPaint = new Paint();
-    ArrayList<MyShape> mShapes = new ArrayList<MyShape>();
-    MyShape mMovingShape = null;
-    Rect m_rect = new Rect();
+    private Paint mPaint = new Paint();
+    private ArrayList<MyShape> mShapes = new ArrayList<MyShape>();
+    private MyShape mMovingShape = null;
+    private Rect m_rect = new Rect();
     private GameLogic m_logic;
 
     public GameView(Context context, AttributeSet attrs)
@@ -75,19 +71,22 @@ public class GameView extends View
     protected void onDraw( Canvas canvas )
     {
         mPaint.setColor( Color.BLACK );
-        mPaint.setStyle( Paint.Style.STROKE );
         for (int r=5; r>=0; --r){
             for (int c=0; c<6;++c){
                 m_rect.set( c * m_cellWidth, r * m_cellHeight,
                         c * m_cellWidth + m_cellWidth, r * m_cellHeight + m_cellHeight );
+                mPaint.setColor( Color.BLACK );
+                mPaint.setStyle( Paint.Style.FILL );
                 canvas.drawRect( m_rect, mPaint );
-                m_rect.inset( (int)(m_rect.width() * 0.1), (int)(m_rect.height() * 0.1) );
+                //m_rect.inset( (int)(m_rect.width() * 0.1), (int)(m_rect.height() * 0.1) );
+                mPaint.setColor( Color.WHITE );
+                mPaint.setStyle( Paint.Style.STROKE );
+                canvas.drawRect( m_rect, mPaint );
             }
         }
         mPaint.setStyle( Paint.Style.FILL );
         for ( MyShape shape : mShapes ) {
-            mPaint.setColor( shape.color );
-            if(shape.color == Color.CYAN)
+            if(shape.type.equals("lee"))
                 canvas.drawBitmap(lee,null,shape.rect,mPaint);
             else{
                 if(shape.block.isVertical())
@@ -95,7 +94,6 @@ public class GameView extends View
                 else
                     canvas.drawBitmap(rotatedcarter,null,shape.rect,mPaint);
             }
-            //canvas.drawRect( shape.rect.left+2,shape.rect.top+2,shape.rect.right-2,shape.rect.bottom-2, mPaint );
         }
     }
 
@@ -106,17 +104,14 @@ public class GameView extends View
 
     private void makeShapes( )
     {
-        /*Log.d("GameViewLOL", "Starting to parse");
-        Log.d("GameViewLOL", board.get(0).getPos().toString());
-        Log.d("GameViewLOL", "m_cellWidth:"+m_cellWidth );*/
         mShapes = new ArrayList<MyShape>();
         ArrayList<Block> board = m_logic.getBlockArray();
         boolean isFirst = true;
         for ( Block b : board)
         {
-            int color = Color.DKGRAY;
+            String type = "carter";
             if(isFirst){
-                color = Color.CYAN;
+                type = "lee";
                 isFirst = false;
             }
             int xLength = m_cellWidth;
@@ -130,7 +125,7 @@ public class GameView extends View
                 xLength *= b.getLength();
             }
             Rect tempR = new Rect(b.getPos().x*m_cellWidth,b.getPos().y*m_cellHeight,(b.getPos().x*m_cellWidth)+xLength,(b.getPos().y*m_cellHeight)+yLength);
-            mShapes.add(new MyShape(tempR,color,b));
+            mShapes.add(new MyShape(tempR,type,b));
         }
         invalidate();
     }
@@ -182,32 +177,34 @@ public class GameView extends View
 
                 m_logic.moveBlock(screenToWorld(m_oldPos),screenToWorld(new Point(mMovingShape.rect.left,mMovingShape.rect.top)));
 
+
+                //Sound
+                if(MainActivity.settings.getBoolean(getContext().getString(R.string.settings_sound_variable_name),getResources().getBoolean(R.bool.sound)))
+                {
+                    if(mMovingShape.type.equals("lee"))
+                    {
+                        if(leeSound.isPlaying()){
+                            leeSound.seekTo(0);
+                        } else {
+                            leeSound.start();
+                        }
+                    }
+                    else
+                    {
+                        if(carterSound.isPlaying())
+                        {
+                            carterSound .seekTo(0);
+                        } else {
+                            carterSound.start();
+                        }
+                    }
+                }
                 if(m_logic.isGameOver()){
                     m_logic.loadNextLevel();
                     makeShapes();
                 }
                 invalidate();
                 mMovingShape = null;
-
-                //Sound
-
-                if(mMovingShape.color == Color.CYAN)
-                {
-                    if(leeSound.isPlaying()){
-                        leeSound.seekTo(0);
-                    } else {
-                        leeSound.start();
-                    }
-                }
-                else
-                {
-                    if(carterSound.isPlaying())
-                    {
-                        carterSound .seekTo(0);
-                    } else {
-                        carterSound.start();
-                    }
-                }
             }
             break;
         case MotionEvent.ACTION_MOVE:
@@ -248,18 +245,6 @@ public class GameView extends View
         for ( MyShape shape : mShapes ) {
             if ( shape.rect.contains( x, y ) ) {
                 return shape;
-            }
-        }
-        return null;
-    }
-
-    private MyShape collision( MyShape with ) {
-        for ( MyShape shape : mShapes ) {
-            if(!shape.equals(with))
-            {
-                if (Rect.intersects(with.rect,shape.rect)) {
-                    return shape;
-                }
             }
         }
         return null;

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -19,10 +18,6 @@ import is.ru.TrafficJam.DataBase.TrafficJamSQLiteAdapter;
  */
 public class OptionsActivity extends Activity
 {
-
-    private Switch switchVibrate;
-    private Switch switchSound;
-
     private TrafficJamSQLiteAdapter trafficJamAdapter = new TrafficJamSQLiteAdapter( this );
 
     public void onCreate(Bundle savedInstanceState)
@@ -31,7 +26,7 @@ public class OptionsActivity extends Activity
         setContentView(R.layout.options);
 
         // Setup the vibrate switch:
-        switchVibrate = (Switch) findViewById(R.id.switchVibrate); // Get a view of the vibrate switch.
+        Switch switchVibrate = (Switch) findViewById(R.id.switchVibrate); // Get a view of the vibrate switch.
 
         switchVibrate.setChecked(MainActivity.settings.getBoolean(getString(R.string.settings_vibrate_variable_name),getResources().getBoolean(R.bool.vibrate)));// Load the state of the variable and set the swich to that state
 
@@ -46,7 +41,7 @@ public class OptionsActivity extends Activity
         });
 
         // Setup the sound switch:
-        switchSound = (Switch) findViewById(R.id.switchSound); // Get a view of the sound switch.
+        Switch switchSound = (Switch) findViewById(R.id.switchSound); // Get a view of the sound switch.
 
         switchSound.setChecked(MainActivity.settings.getBoolean(getString(R.string.settings_sound_variable_name),getResources().getBoolean(R.bool.sound)));// Load the state of the variable and set the swich to that state
 

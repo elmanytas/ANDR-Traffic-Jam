@@ -13,7 +13,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".LevelSelectActivity" android:label="Select A level"/>
-        <activity android:name=".GameActivity" android:label="Play the game"/>
+        <activity android:name=".GameActivity" android:theme="@android:style/Theme.NoTitleBar" android:label="Play the game"/>
         <activity android:name=".OptionsActivity" android:label="Options"/>
     </application>
 </manifest>

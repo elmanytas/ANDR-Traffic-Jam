@@ -2,16 +2,13 @@ package is.ru.TrafficJam;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.*;
 import is.ru.TrafficJam.DataBase.TrafficJamSQLiteAdapter;
 
-import java.util.Map;
 import java.util.HashMap;
 
 /**
@@ -26,7 +23,7 @@ public class LevelSelectActivity extends Activity
     public final static String LEVEL_NUMBER = "is.ru.TrafficJam.LEVEL_NUMBER";
 
     private TrafficJamSQLiteAdapter trafficJamAdapter = new TrafficJamSQLiteAdapter( this );
-    private Map<String, Boolean> finishedLevels;
+    private HashMap<String, Boolean> finishedLevels;
 
     public void onCreate(Bundle savedInstanceState)
     {

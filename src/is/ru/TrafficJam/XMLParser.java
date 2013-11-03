@@ -11,7 +11,6 @@ package is.ru.TrafficJam;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import android.content.res.AssetManager;
 import android.graphics.Point;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -22,7 +21,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
-import java.io.File;
 
 
 public class XMLParser
@@ -42,7 +40,12 @@ public class XMLParser
         {
             readXML();
         }
-        return blocks.get(lvlNr-1);
+        ArrayList<Block> returnedList = new ArrayList<Block>();
+        for(Block b : blocks.get(lvlNr-1))
+        {
+            returnedList.add(new Block(b));
+        }
+        return returnedList;
     }
 
     public static int getNumberOfLevels()
@@ -99,9 +102,9 @@ public class XMLParser
                     String blockString = element.getElementsByTagName("setup").item(0).getTextContent();
                     String[] blockStringSplit = blockString.split(", ");
 
-                    for (int j = 0; j < blockStringSplit.length; j++)
+                    for (String block : blockStringSplit)
                     {
-                        temp.add(stringsToBlocks(blockStringSplit[j]));
+                        temp.add(stringsToBlocks(block));
                     }
 
                 }

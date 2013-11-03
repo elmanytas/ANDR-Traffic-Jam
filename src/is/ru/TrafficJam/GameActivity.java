@@ -2,11 +2,8 @@ package is.ru.TrafficJam;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
-
-import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,8 +14,8 @@ import java.util.ArrayList;
  */
 public class GameActivity extends Activity
 {
-    GameView m_gv;
-    GameLogic m_logic;
+    private GameView m_gv;
+    private GameLogic m_logic;
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -28,14 +25,17 @@ public class GameActivity extends Activity
         String levelNumber = intent.getStringExtra(LevelSelectActivity.LEVEL_NUMBER);
 
 
-
-        setContentView(R.layout.game);
+        Log.d("GameViewLOL","orientation: "+getResources().getConfiguration().orientation);
+        if(getResources().getConfiguration().orientation == 1)
+            setContentView(R.layout.gamevertical);
+        else
+            setContentView(R.layout.gamehorizontal);
         m_gv = (GameView) findViewById( R.id.gameview );
         m_logic = new GameLogic(Integer.parseInt(levelNumber),getApplicationContext());
         m_gv.setLogic(m_logic);
         if ( savedInstanceState != null ) {
             String state = savedInstanceState.getString( "boardState" );
-            m_logic.setState( state );
+            m_logic.setState(state);
         }
         //Log.d("GameViewLOL",m_gv.getState());
     }

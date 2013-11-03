@@ -16,10 +16,10 @@ import java.util.ArrayList;
  */
 public class GameLogic
 {
-    ArrayList<Block> blockArray;
-    int m_level;
-    int[][] m_boardstatus;
-    Context m_context;
+    private ArrayList<Block> blockArray;
+    private int m_level;
+    private int[][] m_boardstatus;
+    private Context m_context;
     private TrafficJamSQLiteAdapter trafficJamAdapter;
 
     public ArrayList<Block> getBlockArray() {
@@ -68,16 +68,6 @@ public class GameLogic
     }
     public int getMax(Block b)
     {
-
-        for(int i = 0; i<6; i++)
-        {
-            String msg = "";
-            for(int j = 0; j <6; j++)
-            {
-                msg+= m_boardstatus[j][i];
-            }
-            Log.d("GameViewLOL",msg);
-        }
         int result;
         if(b.isVertical())
         {
@@ -168,9 +158,9 @@ public class GameLogic
         blockArray = new ArrayList<Block>();
         String[] blockStringSplit = state.split(", ");
 
-        for (int j = 0; j < blockStringSplit.length; j++)
+        for (String block : blockStringSplit)
         {
-            blockArray.add(XMLParser.stringsToBlocks(blockStringSplit[j]));
+            blockArray.add(XMLParser.stringsToBlocks(block));
         }
     }
 }
