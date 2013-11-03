@@ -1,13 +1,17 @@
 package is.ru.TrafficJam;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.*;
 import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -19,6 +23,8 @@ import java.util.ArrayList;
  */
 public class GameView extends View
 {
+    private Vibrator vibrator = (Vibrator)getContext().getSystemService(Context.VIBRATOR_SERVICE);
+
     private class MyShape {
 
         MyShape( Rect r, String c, Block b ) {
@@ -205,6 +211,10 @@ public class GameView extends View
                 }
                 invalidate();
                 mMovingShape = null;
+                // emit an custom event ....
+
+                if(MainActivity.settings.getBoolean("vibrate",false))
+                    vibrator.vibrate(200);//TODO setja if hérna á settings
             }
             break;
         case MotionEvent.ACTION_MOVE:
