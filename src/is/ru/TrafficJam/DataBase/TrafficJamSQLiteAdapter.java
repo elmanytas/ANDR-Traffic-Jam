@@ -91,7 +91,9 @@ public class TrafficJamSQLiteAdapter
 
     public void resetLevels()
     {
-        dbHelper.resetLevels(db);
+        openToWrite();
+        db.delete(SQLiteDBHelper.TableFinishedLevels, null, null);
+        close();
     }
 
 

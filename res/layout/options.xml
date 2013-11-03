@@ -16,8 +16,8 @@
             android:id="@+id/switchVibrate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOn="Vibrate on"
-            android:textOff="Vibrate off"
+            android:textOn="ON"
+            android:textOff="OFF"
             android:text="Vibrate: "
             />
 
@@ -25,8 +25,8 @@
             android:id="@+id/switchSound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOn="Vibrate on"
-            android:textOff="Vibrate off"
+            android:textOn="ON"
+            android:textOff="OFF"
             android:text="Sound: "
             />
 
